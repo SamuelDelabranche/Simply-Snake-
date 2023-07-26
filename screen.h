@@ -12,6 +12,7 @@ class Screen{
 		Fruit* fruit;
 		int m_width, m_height;
 
+
 		char m_borderCharacter = '#';
 
 		enum direction { UP, DOWN, RIGHT, LEFT };

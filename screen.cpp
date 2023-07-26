@@ -94,9 +94,6 @@ void Screen::drawArena() const {
 			else if (x == snake->getPos('x') && y == snake->getPos('y')) { cout << snake->getCharacter(); }
 			else if (x == fruit->getPos('x') && y == fruit->getPos('y')){ cout << fruit->getCharacter(); }
 			else { cout << " "; }
-			for (int i = 0; i < snake->getNbTails(); i++) {
-
-			}
 		}
 		cout << endl;
 	}
