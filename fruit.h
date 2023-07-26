@@ -12,7 +12,7 @@ class Fruit{
 	public:
 		void randomFruit(const int sW, const int sH);
 		int getPos(char pos) const;
-		char getFruitCharacter() const;
+		char getCharacter() const;
 };
 
 #endif
