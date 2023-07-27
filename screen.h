@@ -3,6 +3,7 @@
 #define SCREEN_H
 
 #include <string>
+#include <vector>
 #include "fruit.h"
 #include "snake.h"
 
@@ -11,22 +12,21 @@ class Screen{
 		Snake* snake;
 		Fruit* fruit;
 		int m_width, m_height;
-
+		int m_posTailsX[100], m_posTailsY[100];
+		int m_prevPosX = 0, m_prevPosY = 0, m_tempPrevPosX = 0, m_tempPrevPosY = 0;
 
 		char m_borderCharacter = '#';
 
-		enum direction { UP, DOWN, RIGHT, LEFT };
-		direction m_dir;
+		int m_dir;
 		void drawArena() const;
 
 	public:
 		Screen(int w = 40, int h = 20);
 		~Screen();
-		void updateScreen() const;
+		void updateScreen();
 		void setDir(const int& newDir);
-		void changeSnakeMovement();
-
-		bool logic() const;
+		bool logic();
+		void changeTailsPos();
 };
 
 

@@ -21,17 +21,53 @@ Screen::~Screen() {
 	delete snake;
 }
 
-bool Screen::logic() const{
-	if (*snake == *fruit) {
-		fruit->randomFruit(m_width, m_height);
-		snake->incrementNbTails();
-	}
+void Screen::changeTailsPos() {
+	m_prevPosX = m_posTailsX[0];
+	m_prevPosY = m_posTailsY[0];
 
-	return (snake->getPos('x') <= 0 || snake->getPos('x') >= this->m_width || snake->getPos('y') <= -1 || snake->getPos('y') >= this->m_height);
+	m_posTailsX[0] = snake->getPos('x');
+	m_posTailsY[0] = snake->getPos('y');
+
+	for (int i = 1; i < snake->getTails(); i++) {
+		m_tempPrevPosX = m_posTailsX[i];
+		m_tempPrevPosY = m_posTailsY[i];
+
+		m_posTailsX[i] = m_prevPosX;
+		m_posTailsY[i] = m_prevPosY;
+
+		m_prevPosX = m_tempPrevPosX;
+		m_prevPosY = m_tempPrevPosY;
+
+	}
 
 }
 
-void Screen::updateScreen() const {
+bool Screen::logic(){
+
+
+	if (*snake == *fruit) {
+		fruit->randomFruit(m_width, m_height);
+		snake->incrementTails();
+	}
+	bool cond1X = (snake->getPos('x') <= 0 );
+	bool cond2X = (snake->getPos('x') >= this->m_width);
+	
+	bool cond1Y = (snake->getPos('y') <= -1);
+	bool cond2Y = (snake->getPos('y') >= this->m_height);
+
+	bool condTails = false;
+	for (int i = 1; i < snake->getTails(); i++) {
+		if (m_posTailsX[i] == snake->getPos('x') && m_posTailsY[i] == snake->getPos('y')) { 
+			condTails = true; 
+			break; }
+	}
+
+
+	return (cond1X || cond2X || cond1Y || cond2Y || condTails);
+
+}
+
+void Screen::updateScreen(){
 	drawArena();
 }
 
@@ -39,41 +75,23 @@ void Screen::setDir(const int &newDir) {
 	switch (newDir)
 	{
 		case 1:
-			this->m_dir = UP;
 			snake->addMovement('y', false);
 			break;
 		case 2:
-			this->m_dir = DOWN;
 			snake->addMovement('y', true);
 			break;
 		case 3:
-			this->m_dir = LEFT;
 			snake->addMovement('x', false);
 			break;
 		case 4:
-			this->m_dir = RIGHT;
 			snake->addMovement('x', true);
 			break;
 		default:
 			break;
 	
 	}
-}
+	changeTailsPos();
 
-void Screen::changeSnakeMovement() {
-	switch (m_dir)
-	{
-	case UP:
-		break;
-	case DOWN:
-		break;
-	case RIGHT:
-		break;
-	case LEFT:
-		break;
-	default:
-		break;
-	}
 }
 
 void Screen::drawArena() const {
@@ -81,32 +99,41 @@ void Screen::drawArena() const {
 	system("cls");
 
 
-	for (int i = 0; i < m_width+2; i++) {
+
+	for (int i = 0; i < m_width+1; i++) {
 		cout << m_borderCharacter;
 	} // TOP border
 	cout << endl;
 
 	for (int y = 0; y < m_height; y++) {
-		for (int x = 0; x < m_width+2; x++) {
-			if (x == 0 || x == m_width + 1) {
+		for (int x = 0; x < m_width+1; x++) {
+			if (x == 0 || x == m_width) {
 				cout << m_borderCharacter;
 			}
 			else if (x == snake->getPos('x') && y == snake->getPos('y')) { cout << snake->getCharacter(); }
 			else if (x == fruit->getPos('x') && y == fruit->getPos('y')){ cout << fruit->getCharacter(); }
-			else { cout << " "; }
+			else{ 
+				bool check = false;
+
+				for (int i = 1; i < snake->getTails(); i++) {
+					if (m_posTailsX[i] == x && m_posTailsY[i] == y) { cout << snake->getTailsCharacter(); check = true; }
+				
+				}
+				if (!check) { cout << " ";}
+				
+			}
+
 		}
 		cout << endl;
 	}
 
-	for (int i = 0; i < m_width+2; i++) {
+	for (int i = 0; i < m_width+1; i++) {
 		cout << m_borderCharacter;
 	} // BOTTOM border
 
 	cout << endl;
 	cout << "Fruit : X{" << fruit->getPos('x') << "} | Y{" << fruit->getPos('y') << "}" << endl;
-	cout << "Snake : X{" << snake->getPos('x') << "} | Y{" << snake->getPos('y') << "}" << endl;
-	cout << "count of tails : " << snake->getNbTails() << endl;
-
+	cout << "Score : " << (snake->getTails()-1)*10 << endl;
 
 }
 

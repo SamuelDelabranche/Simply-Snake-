@@ -8,8 +8,8 @@ using namespace std;
 void Fruit::randomFruit(const int sW, const int sH) {
 	srand(static_cast<unsigned>(time(nullptr)));
 
-	this->m_x = rand() % sW;
-	this->m_y = rand() % sH;
+	this->m_x = rand() % (sW-1) +1;
+	this->m_y = rand() % (sH-1) +1;
 
 }
 

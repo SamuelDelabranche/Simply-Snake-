@@ -6,18 +6,19 @@
 
 class Snake : public Fruit{
 	private:
-		char m_character = 'O';
-		int m_nbTails = 0;
-		int m_x = 0;
-		int m_y = 0;
+		char m_character = 'X';
+		char m_tailsCharacter = 'x';
+		int m_x, m_y, nbTails = 1;
 
 	public:
 		void setOriginalPos(const int &x, const int &y);
 		void addMovement(const char &axis, const bool &sign); // true = + | false = -
 		int getPos(const char &pos) const;
 		char getCharacter() const;
-		void incrementNbTails();
-		int getNbTails() const;
+		char getTailsCharacter() const;
+
+		void incrementTails();
+		int getTails() const;
 
 		bool operator==(const Fruit& fruit) const;
 };

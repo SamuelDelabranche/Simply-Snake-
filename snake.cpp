@@ -13,8 +13,8 @@ char Snake::getCharacter() const {
 	return this->m_character;
 }
 
-int Snake::getNbTails() const {
-	return this->m_nbTails;
+char Snake::getTailsCharacter() const {
+	return this->m_tailsCharacter;
 }
 
 void Snake::addMovement(const char& axis,const bool& sign) {
@@ -33,6 +33,11 @@ bool Snake::operator==(const Fruit& fruit) const {
 
 }
 
-void Snake::incrementNbTails() {
-	++this->m_nbTails;
+
+void Snake::incrementTails() {
+	++this->nbTails;
+}
+
+int Snake::getTails() const {
+	return this->nbTails;
 }
