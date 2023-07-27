@@ -11,9 +11,12 @@ using namespace std;
 Screen::Screen(int w, int h) : m_width(w), m_height(h) {
 	snake = new Snake;
 	fruit = new Fruit;
+	
 	fruit->randomFruit(m_width, m_height);
 	snake->setOriginalPos((m_width+1) / 2, m_height / 2);
+	
 	drawArena();
+
 }
 
 Screen::~Screen() {
@@ -74,22 +77,21 @@ void Screen::updateScreen(){
 void Screen::setDir(const int &newDir) {
 	switch (newDir)
 	{
-		case 1:
-			snake->addMovement('y', false);
+		case 'z':
+			snake->setPos('z');
 			break;
-		case 2:
-			snake->addMovement('y', true);
+		case 's':
+			snake->setPos('s');
 			break;
-		case 3:
-			snake->addMovement('x', false);
+		case 'q':
+			snake->setPos('q');
 			break;
-		case 4:
-			snake->addMovement('x', true);
-			break;
-		default:
+		case 'd':
+			snake->setPos('d');
 			break;
 	
 	}
+	snake->addMovement();
 	changeTailsPos();
 
 }
@@ -132,8 +134,7 @@ void Screen::drawArena() const {
 	} // BOTTOM border
 
 	cout << endl;
-	cout << "Fruit : X{" << fruit->getPos('x') << "} | Y{" << fruit->getPos('y') << "}" << endl;
-	cout << "Score : " << (snake->getTails()-1)*10 << endl;
+	cout << "\t\tScore : " << (snake->getTails()-1)*10 << endl;
 
 }
 

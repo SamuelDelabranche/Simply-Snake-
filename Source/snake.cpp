@@ -17,15 +17,17 @@ char Snake::getTailsCharacter() const {
 	return this->m_tailsCharacter;
 }
 
-void Snake::addMovement(const char& axis,const bool& sign) {
-	if (axis == 'x') {
-		if (sign == true) { this->m_x += 1; }
-		else { this->m_x -= 1; }
+void Snake::addMovement() {
+	switch (m_dir){
+		case 'z': m_y -= 1; break;
+		case 's': m_y += 1; break;
+		case 'q': m_x -= 1; break;
+		case 'd': m_x += 1; break;
 	}
-	else {
-		if (sign == true) { this->m_y += 1; }
-		else { this->m_y -= 1; }
-	}
+}
+
+void Snake::setPos(const char& newDir) {
+	this->m_dir = newDir;
 }
 
 bool Snake::operator==(const Fruit& fruit) const {
