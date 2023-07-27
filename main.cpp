@@ -6,10 +6,10 @@
 
 
 int main() {
+	Screen Arena;
 	bool gameOver = false;
 
 	while (!gameOver) {
-		Screen Arena;
 		Arena.updateScreen();
 		gameOver = Arena.logic();
 		if (_kbhit()) {
