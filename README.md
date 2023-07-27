@@ -12,7 +12,7 @@ The "Snake" project aims to recreate the classic snake game using C++ programmin
 - Make a game in a Terminal
 - Make movement in Terminal
 - Improved my skills in POO
-- 
+  
 ## Components
 
 This project consists of 4 files: 
